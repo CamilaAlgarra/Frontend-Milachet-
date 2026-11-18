@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
@@ -68,7 +67,6 @@ function Login() {
       localStorage.setItem("token", cuerpo.token);
       localStorage.setItem("usuario", JSON.stringify(cuerpo.usuario));
 
-      // Avisa al Navbar para que cambie los botones
       window.dispatchEvent(new Event("sesion-cambio"));
 
       navigate(destinoSeguro(searchParams.get("volver")));
@@ -140,7 +138,6 @@ function Login() {
         {mensaje.texto}
       </p>
 
-      {/* INICIAR SESIÓN */}
       <form
         id="form-login"
         className="contacto-form"
