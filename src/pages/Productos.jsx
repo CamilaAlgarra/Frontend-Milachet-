@@ -122,7 +122,7 @@ function Productos() {
         <h2>Productos</h2>
       </div>
 
-      {cargando && <p>Cargando productos...</p>}
+  
       {error && <p>{error}</p>}
 
       <div className="catalogo">

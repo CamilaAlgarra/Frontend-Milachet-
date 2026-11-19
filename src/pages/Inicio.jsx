@@ -12,7 +12,6 @@ function Inicio() {
           dedicación para acompañar tus momentos favoritos.
         </p>
 
-        //Botones de navegación a la página de productos y a la página sobre nosotros//
         <div className="hero-buttons">
           <Link to="/productos" className="btn-hero">
             Ver productos
