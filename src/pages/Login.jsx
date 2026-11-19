@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
-
+//Valida con una expresión regular que la ruta de redirección sea relativa y válida, evitando redirecciones externas//
 function destinoSeguro(volver) {
-  // Solo permite rutas internas del sitio
   return volver && /^\/[\w-]+(?:\/[\w-]+)*(?:\?[^\s]*)?$/.test(volver)
     ? volver
     : "/";
 }
-
+//Envia datos en formato JSON a la ruta especificada y devuelve un objeto con el estado de la respuesta y el cuerpo de respuesta//
 async function enviarAuth(ruta, datos) {
   const respuesta = await fetch(ruta, {
     method: "POST",
@@ -18,7 +17,7 @@ async function enviarAuth(ruta, datos) {
   const cuerpo = await respuesta.json().catch(() => ({}));
   return { ok: respuesta.ok, cuerpo };
 }
-
+//Controlan que formulario se muestra, el de login o el de registro, y el estado del mensaje de error o éxito//
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,13 +39,12 @@ function Login() {
     email: "",
     password: "",
   });
-
-  // Cambia de panel cuando cambia el #registro de la URL
+//Cambia entre los paneles de inicio de sesion y registro y limpia los mensajes//
   useEffect(() => {
     setPanel(location.hash === "#registro" ? "registro" : "login");
     setMensaje({ texto: "", tipo: "" });
   }, [location.hash]);
-
+//Envia las credenciales al servidor//
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -77,7 +75,7 @@ function Login() {
       });
     }
   };
-
+//Registra el nuevo usuario, limpia el formulario de registro y redirige al panel de login con un mensaje de éxito//
   const handleRegistro = async (e) => {
     e.preventDefault();
 

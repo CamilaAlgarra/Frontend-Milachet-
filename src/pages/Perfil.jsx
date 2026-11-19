@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+//Define los posibles estados de un pedido, que se usan para mostrar y cambiar el estado de cada pedido//
 const ESTADOS = ["pendiente", "confirmado", "entregado", "cancelado"];
 
 function Perfil() {
@@ -13,14 +13,14 @@ function Perfil() {
   const [mensaje, setMensaje] = useState({ texto: "", tipo: "" });
 
   const esAdmin = perfil?.rol === "admin";
-
+//Limpia los datos del navegador y redirige al login si la sesión ha expirado o el token es inválido//
   const salirALogin = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("usuario");
     window.dispatchEvent(new Event("sesion-cambio"));
     navigate("/login?volver=" + encodeURIComponent("/perfil"));
   };
-
+//Envia peticiones autenticadas con el token del usuario y maneja la expiración de la sesión//
   const api = async (ruta, opciones = {}) => {
     const token = localStorage.getItem("token");
     const respuesta = await fetch(ruta, {
@@ -37,7 +37,7 @@ function Perfil() {
     const cuerpo = await respuesta.json().catch(() => ({}));
     return { ok: respuesta.ok, cuerpo };
   };
-
+//Verifica si hay un token en el localStorage y carga los datos del perfil y los pedidos del usuario, o redirige al login si no hay token//
   useEffect(() => {
     const cargar = async () => {
       if (!localStorage.getItem("token")) {
@@ -80,7 +80,7 @@ function Perfil() {
     cargar();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+//Permite a la administradora cambiar el estado de un pedido, enviando la actualización al servidor y actualizando la lista de pedidos en la interfaz//
   const cambiarEstado = async (pedido, nuevoEstado) => {
     try {
       const { ok, cuerpo } = await api("/api/pedidos/" + pedido._id, {
@@ -100,7 +100,7 @@ function Perfil() {
       // si fue por sesión vencida, ya se redirigió al login
     }
   };
-
+//Guarda los cambios en el perfil del usuario, actualizando el localStorage y mostrando un mensaje de éxito o error según corresponda//
   const guardar = async (e) => {
     e.preventDefault();
     try {

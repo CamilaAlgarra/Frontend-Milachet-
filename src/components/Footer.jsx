@@ -1,3 +1,4 @@
+//Es lo fijo, que no se mueve//
 function Footer() {
   return (
     <footer>

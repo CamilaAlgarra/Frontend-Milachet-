@@ -1,6 +1,7 @@
+//Es donde puedo navegar//
 import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
-
+//Revisa la memoria del navegador, buscando el elemento llamado usuario//
 function leerUsuario() {
   try {
     return JSON.parse(localStorage.getItem("usuario"));
@@ -8,19 +9,19 @@ function leerUsuario() {
     return null;
   }
 }
-
+//Inicia las funciones de navegación y ubicación//
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [usuario, setUsuario] = useState(leerUsuario());
 
-  // Se actualiza cuando alguien inicia o cierra sesión
+  // Se actualiza cuando alguien inicia o cierra sesión//
   useEffect(() => {
     const actualizar = () => setUsuario(leerUsuario());
     window.addEventListener("sesion-cambio", actualizar);
     return () => window.removeEventListener("sesion-cambio", actualizar);
   }, []);
-
+//Inicia la función de cerrar sesión, eliminando el token y el usuario del localStorage, y redirigiendo a la página principal//
   const cerrarSesion = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+//Almacena los detalles de cada producto, incluyendo descripción, imagen y estilos disponibles//
 const detallesProductos = {
   bufanda: {
     descripcion: "Bufanda tejida a crochet con diseño personalizado.",
@@ -76,7 +76,7 @@ function Productos() {
   const [abierto, setAbierto] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
-
+//Carga la lista de productos desde el servidor al montar el componente, manejando errores de conexión//
   useEffect(() => {
     fetch("/api/productos")
       .then((res) => {
@@ -93,7 +93,7 @@ function Productos() {
         setCargando(false);
       });
   }, []);
-
+//Permite al usuario elegir un estilo para cada producto, actualizando el estado de los productos elegidos//
   const elegir = (idProducto, nombreEstilo) => {
     setElegidos((prev) => ({
       ...prev,
@@ -108,7 +108,7 @@ function Productos() {
       setAbierto(null);
     }
   };
-
+//Formate a el precio de cada producto para mostrarlo en la interfaz, agregando el símbolo de moneda y separadores de miles//
   const formatoPrecio = (precio) => {
     if (typeof precio === "number" || !isNaN(Number(precio))) {
       return "$" + Number(precio).toLocaleString("es-CO");

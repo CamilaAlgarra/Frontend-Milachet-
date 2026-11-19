@@ -1,5 +1,6 @@
+//Importa el componente Link de react-router-dom para la navegación entre páginas//
 import { Link } from "react-router-dom";
-
+//Letrero de bienvenida con el logo de Milachet y botones para ver productos y conocer la empresa//
 function Inicio() {
   return (
     <section className="hero">
@@ -10,6 +11,8 @@ function Inicio() {
           Diseños artesanales personalizados con amor, creatividad y
           dedicación para acompañar tus momentos favoritos.
         </p>
+
+        //Botones de navegación a la página de productos y a la página sobre nosotros//
         <div className="hero-buttons">
           <Link to="/productos" className="btn-hero">
             Ver productos

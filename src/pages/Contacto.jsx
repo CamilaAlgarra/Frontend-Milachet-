@@ -1,13 +1,16 @@
+//1. Sirve para leer los parametros que vienen en la URL, como el producto que se quiere pedir
+// 2. Define el número de W para enviar los mensajes automaticos//
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
 const NUMERO_WHATSAPP = "573222392766";
 
+//Guarda en un solo estado las 3//
 function Contacto() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-
+//Si inicias la sesión, el nombre y el teléfono se completan automáticamente desde tu perfil. El producto se puede pasar como parámetro//
   const [form, setForm] = useState({
     nombre: "",
     telefono: "",
@@ -31,7 +34,9 @@ function Contacto() {
       })
       .catch(() => {});
   }, []);
-
+// 1.Detecta cada letra que escribe el usuario y actualiza dinamicamente el estado del formulario usando id//
+//2. Limpia el formulario, dejando todo en blanco//
+//3. Redirige a la página de login, pasando como parámetro la página actual para volver después de iniciar sesión//
   const handleChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
   };
@@ -44,7 +49,8 @@ function Contacto() {
     const volver = location.pathname + location.search;
     navigate("/login?volver=" + encodeURIComponent(volver));
   };
-
+//Maneja el envío del formulario, validando los campos, enviando la información al servidor y abriendo WhatsApp con el mensaje prellenado//
+//Registro en el backend del pedido, y si hay error de sesión, se cierra la ventana y se redirige a login//
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,7 +70,7 @@ function Contacto() {
       return;
     }
 
-    // Se abre la ventana dentro del clic para que el navegador no la bloquee
+    // Se abre la ventana dentro del clic para que el navegador no la bloquee//
     const ventana = window.open("", "_blank");
 
     try {
@@ -97,13 +103,13 @@ function Contacto() {
       alert("No se pudo conectar con el servidor. Intenta de nuevo.");
       return;
     }
-
+//Se construye el mensaje de WhatsApp con los datos del formulario y se abre la ventana de WhatsApp con el mensaje prellenado//
     let mensaje = `¡Hola Milachet! 👋\n`;
     mensaje += `Mi nombre es ${nombre}.\n`;
     mensaje += `Quiero pedir: ${producto}.\n`;
     mensaje += `Mi teléfono de contacto: ${telefono}.\n`;
     mensaje += `\nPedido hecho desde la página web de Milachet.`;
-
+//Dibuja el formulario de contacto co sus campos de entrada, etiquetas y los botones de enviar pedido y limpiar//
     const enlaceWhatsApp = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 
     if (ventana) {
